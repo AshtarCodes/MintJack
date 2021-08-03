@@ -3,7 +3,8 @@ import { UserContext } from '../Context/UserContext'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import Game from './Game'
-
+import DeckAPI from '../api'
+import useLocalStorage from '../customHooks/useLocalStorage'
 const styles ={
   hero:{
       minHeight: '100vh',
@@ -42,15 +43,18 @@ const styles ={
 
 // fetch the deck and pass it down as a prop to the game component
 const BlackjackTable = () => {
+    const [d,setD] = useLocalStorage(null)
     const [deckId,setDeckId] = useState('')
 
     const {loggedInUserContext, setLoggedInUserContext} = useContext(UserContext)
 
     const fetchDeck = useCallback(async() => {
-      let res = await axios.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-      setDeckId(res.data.deck_id)
-      
+      let res = await DeckAPI.fetchDeck(1)
+      console.log('get deck id', DeckAPI.deckId)
+      setDeckId(res)
+      setD("deckid",res)
     },[]) 
+
     // TODO retrieve the user , specifically their money so they can make a phone 
     useEffect(() => {
       axios.get('http://localhost:3000/loggedInUser')

@@ -8,21 +8,12 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped
     const [dealerValue,setDealerValue] = useState(0)
     const [currentCards,setCurrentCards] = useState([])
     
-    const drawCard = async () => {
-        try {
-            const res = await DeckAPI.drawCard(deck)
-            let cardData = res.cards[0] // one card {...} 
-            console.log(cardData,'cardData')
-            return cardData;            
-        } catch (e) {
-            console.log('cardError')
-            console.error(e)
-        }
-    }
+    // if the card is an ace , ace ===1 
+    // if the value < 12 and the hand has an ace , +10
     const handleHit = async() => {
         // console.log(initialCards) // [{...},{...}]
         
-        const nextCard = await drawCard();      
+        const nextCard = await DeckAPI.drawOne(deck);      
         console.log('next card: ',nextCard)
         setCurrentCards([...currentCards,nextCard]) /// All cards in player hand: [{...},{...}]
 
@@ -38,14 +29,16 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped
                 let aceCase = 1;
                 // if initial ace, and next Ace
                 if(hasInitialAce() && nextCard.value === 'ACE'){
-                    if ((prev + aceCase) > 21){ // make both aces value of one
+                    if((prev + nextCard.value) > 21) { // make next ace value of one
+                        current = prev + aceCase
+                        tagAnAce()
+                        // todo put below in else if if breaking stuff
+                        // ((prev + aceCase) > 21)
+                    } else { // make both aces value of one
                         current = prev + aceCase - 10
                         tagAnAce()
                         tagAnAce()
-                    } else { // make next ace value of one
-                        current = prev + aceCase
-                        tagAnAce()
-                    }
+                    } 
 
                 // if no initial ace and next is ace
                 } else if ((!hasInitialAce()) && nextCard.value === 'ACE'){
@@ -214,7 +207,7 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped
                 <div>
                     <h2>Dealer</h2> 
                     <Card key={currentCards[0].code} cardName={currentCards[0].code} cardImg={currentCards[0].image}/>
-                    <Card key={currentCards[1].code} cardName={currentCards[1].code} cardImg={'https://lh3.googleusercontent.com/proxy/Y6cxlC3bBdwu5aW3lL3AymB-dEFPexx_oNuIhA1RdG53I2phL6mzHyEFxmnc1dFGvtevVYNwvi3RzRPOA3tPdWdCKazAI5Y'}/>
+                    <Card key={currentCards[1].code} cardName={currentCards[1].code} cardImg={'https://res.cloudinary.com/ashsheran1/image/upload/c_scale,q_auto:good,w_250/v1627977292/red_back_card_hgc2wk.png'}/>
                 </div>
                 :
                 currentCards.map((card) => {

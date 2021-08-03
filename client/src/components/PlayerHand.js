@@ -71,6 +71,8 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus, flippe
                 } else if (hasInitialAce() && nextCard.value !== 'ACE'){
                     current = prev + nextCardValue - (10 * numOfUntaggedAces()) // make an initial ace value of one
                     tagAnAce()
+                } else {
+                    current = prev + nextCardValue;
                 }
             } else {
                 current = prev + nextCardValue
@@ -150,7 +152,10 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus, flippe
     const handleStay = () => {
         console.log('Stay! Dealer\'s turn now')
         trackPlayerValue(playerValue)
-        setFlippedStatus(true)
+        console.log(' before flipped on stay',flipped)
+        setFlippedStatus((prev) => true)
+        console.log('flipped after stay',flipped)
+
     }
 
     const loadCards = useCallback(() => {

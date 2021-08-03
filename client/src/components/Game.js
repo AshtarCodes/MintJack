@@ -46,7 +46,7 @@ function Game({deckId}) {
         setDealerState([...initialDraw[0]])
         setIsLoadingCards(true)
     },[])
- // TODO handle the case where the player is greater than the dealer value but still under 21 (add && conditional)
+    // TODO handle the case where the player is greater than the dealer value but still under 21 (add && conditional)
     // TODO handle if a player busts and the dealer busts as well, we can count it as a draw for the player and they don't lost their bet
     useEffect(() => {
         console.log('deck id',deckId)
@@ -71,7 +71,12 @@ function Game({deckId}) {
             setRoundOver(true)
         }
     }, [finalDealerValue])
-
+    
+    useEffect(() => {
+        // if can't retrieve deckId from local storage, fetches a deck, and stores id. 
+        // if deckid is empty, fetch another deck.  
+        // if retrieves deckId, draws cards
+    })
 
     if(!loadingCards){
         return (      
@@ -92,6 +97,7 @@ function Game({deckId}) {
     
             <PlayerHand 
                     setFlippedStatus = {setFlippedStatus} 
+                    flipped={flipped}
                     initialCards={playerState} 
                     trackPlayerValue={trackPlayerValue} 
                     deck={deckId}/>
