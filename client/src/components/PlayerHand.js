@@ -11,7 +11,7 @@ const styles ={
     }
 }
 
-const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
+const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus}) => {
     const [loadedCards,setLoadedCards] = useState(false)
     const [playerValue,setPlayerValue] = useState(0)
     const [currentCards,setCurrentCards] = useState([])
@@ -142,6 +142,7 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     const handleStay = () => {
         console.log('Stay! Dealer\'s turn now')
         trackPlayerValue(playerValue)
+        setFlippedStatus(true)
     }
 
     const loadCards = useCallback(() => {

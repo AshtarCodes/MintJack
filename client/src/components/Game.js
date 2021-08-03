@@ -12,7 +12,11 @@ function Game({deckId}) {
     const [roundOver, setRoundOver] = useState(false)
     // handle load
     const [loadingCards,setIsLoadingCards] = useState(false)
+    const [flipped,setFlipped] = useState(false)
     // adds the value of they playersHand to the queue when they hit/bust/get to 21 , these values should be passed down to the dealer 
+    const setFlippedStatus = (status) => {
+        setFlipped(status)
+    }
     const trackPlayerValue = (val) => {
         setFinalPlayerValue(val)
     }
@@ -20,6 +24,7 @@ function Game({deckId}) {
     const trackDealerValue = (val) => {
         setFinalDealerValue(val)
     }
+
     
     const [playerState, setPlayerState] = useState([])
     const [dealerState, setDealerState] = useState([])
@@ -58,9 +63,6 @@ function Game({deckId}) {
         
         :
         <div style={styles.game}>
-            {/* <div>
-                <h1>MintJack</h1>
-            </div> */}
             {/* <p>This is our Game component</p> */}
             {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
 
@@ -68,21 +70,21 @@ function Game({deckId}) {
                 <button className='navBtns' onClick={() => window.location.reload()}>Play Again</button>
             }
 
-            {/* <div style={{backgroundColor: 'blue'}}>
+            <div style={{backgroundColor: 'blue'}}>
             <h2 style={{color:'white'}}>Final Player Value</h2>
             <p style={{fontSize:'32px'}}>{finalPlayerValue}</p>
             </div>
             <div style={{backgroundColor: 'red'}}>
             <h2 style={{color:'white'}}>Final Dealer Value</h2>
             <p style={{fontSize:'32px'}}>{finalDealerValue}</p>
-            </div> */}
+            </div>
             
-            <DealerHand initialCards={dealerState} finalPlayerValue={finalPlayerValue} trackDealerValue={trackDealerValue} deck={deckId}/>
+            <DealerHand setFlippedStatus = {setFlippedStatus} initialCards={dealerState} flipped={flipped} finalPlayerValue={finalPlayerValue} trackDealerValue={trackDealerValue} deck={deckId}/>
             {/* console.log(playerStart) */}
-            {/* <p>{playerState.length}</p> */}
+            <p>{playerState.length}</p>
 
             {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
-            <PlayerHand initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
+            <PlayerHand setFlippedStatus = {setFlippedStatus} initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
 
             
             

@@ -3,7 +3,7 @@ import DeckAPI from '../api'
 import { parseCardValue } from '../helpers'
 import Card from './Card'
 
-const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue}) => {
+const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped,setFlippedStatus}) => {
     const [loadedCards,setLoadedCards] = useState(false)
     const [dealerValue,setDealerValue] = useState(0)
     const [currentCards,setCurrentCards] = useState([])
@@ -175,9 +175,14 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue}) => {
     //         }
     //     }
     // },[])
+    // have a flipped state in the game component 
+    // when the final player value is set (when the player stays or busts)
+    // we flip that state and then that use effect runs ,the flip state flips over the card
+    // then it evaluates and this logic can run
     
     useEffect(() => {
-        if (finalPlayerValue && dealerValue < 17){
+     
+           if (finalPlayerValue && dealerValue < 17){
             checkDealer(dealerValue)
 
             function checkDealer(dealerValue){
@@ -185,24 +190,34 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue}) => {
                 handleHit()
                 }
             }
-        } else if(dealerValue >= 17) {
-            trackDealerValue(dealerValue)
-        }
+            } else if(dealerValue >= 17) {
+                setFlippedStatus(true)
+                trackDealerValue(dealerValue)
+            }
         
-    }, [dealerValue,finalPlayerValue])
+        
+    }, [dealerValue, finalPlayerValue])
+
 
     return (
         !loadedCards ? 
         <p>Loading</p>
         :
         <div>
-            <h2>Dealer</h2> 
-            {/* <p>Dealer Score</p> */}
-            {/* <p>{dealerValue}</p> */}
-            {/* <button onClick={handleHit}>Hit Dealer</button> */}
-            {currentCards.map((card) => {
-                return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
-            })}
+            <p>Dealer Score</p>
+            <p>Dealer Value : {dealerValue}</p>
+            <button onClick={handleHit}>Hit Dealer</button>
+             {(!flipped) ?
+                <div> 
+                    <Card key={currentCards[0].code} cardName={currentCards[0].code} cardImg={currentCards[0].image}/>
+                    <Card key={currentCards[1].code} cardName={currentCards[1].code} cardImg={'https://lh3.googleusercontent.com/proxy/Y6cxlC3bBdwu5aW3lL3AymB-dEFPexx_oNuIhA1RdG53I2phL6mzHyEFxmnc1dFGvtevVYNwvi3RzRPOA3tPdWdCKazAI5Y'}/>
+                </div>
+                :
+                currentCards.map((card) => {
+                    return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
+                })}
+            
+            
         </div>
     )
 }

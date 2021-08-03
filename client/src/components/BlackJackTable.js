@@ -48,7 +48,7 @@ const BlackjackTable = () => {
     const {loggedInUserContext, setLoggedInUserContext} = useContext(UserContext)
 
     const fetchDeck = useCallback(async() => {
-      let res = await axios.get('https://deckofcardsapi.com/api/deck/new/')
+      let res = await axios.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
       setDeckId(res.data.deck_id)
       
     },[]) 
@@ -71,7 +71,7 @@ const BlackjackTable = () => {
       })
     }
     
-    if(loggedInUserContext){
+    // if(loggedInUserContext){
       return (
         <div style={styles.landing}>
           <nav style={styles.nav}>
@@ -85,11 +85,11 @@ const BlackjackTable = () => {
           </div>
         </div>
       )
-    } else{
-      return(
-        <Redirect to='/' />
-      )
-    }
+    // } else{
+    //   return(
+    //     <Redirect to='/' />
+    //   )
+    // }
 
     
 }
