@@ -58,25 +58,28 @@ function Game({deckId}) {
         
         :
         <div style={styles.game}>
+            {/* <div>
+                <h1>MintJack</h1>
+            </div> */}
             {/* <p>This is our Game component</p> */}
             {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
 
             {roundOver && 
-                <a href='/table' onClick={() => handleSetup(deckId,1)} className='navBtns'>Play Again</a>
+                <button className='navBtns' onClick={() => window.location.reload()}>Play Again</button>
             }
 
-            <div style={{backgroundColor: 'blue'}}>
+            {/* <div style={{backgroundColor: 'blue'}}>
             <h2 style={{color:'white'}}>Final Player Value</h2>
             <p style={{fontSize:'32px'}}>{finalPlayerValue}</p>
             </div>
             <div style={{backgroundColor: 'red'}}>
             <h2 style={{color:'white'}}>Final Dealer Value</h2>
             <p style={{fontSize:'32px'}}>{finalDealerValue}</p>
-            </div>
+            </div> */}
             
             <DealerHand initialCards={dealerState} finalPlayerValue={finalPlayerValue} trackDealerValue={trackDealerValue} deck={deckId}/>
             {/* console.log(playerStart) */}
-            <p>{playerState.length}</p>
+            {/* <p>{playerState.length}</p> */}
 
             {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
             <PlayerHand initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
@@ -89,8 +92,11 @@ function Game({deckId}) {
 
 const styles = {
     game:{
-        backgroundColor:'green',
-        fontSize:'36px'
+        backgroundColor:'rgba(2, 62, 138, 1)',
+        width: '100%',
+        borderRadius: '1rem',
+        padding: '1.777rem',
+        marginTop: '4rem'
     }
 }
 

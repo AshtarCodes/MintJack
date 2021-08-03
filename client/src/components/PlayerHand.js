@@ -3,6 +3,13 @@ import {parseCardValue} from '../helpers'
 import DeckAPI from '../api'
 import Card from './Card'
 
+const styles ={
+    playerHand: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    }
+}
 
 const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     const [loadedCards,setLoadedCards] = useState(false)
@@ -170,14 +177,21 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
         !loadedCards ? 
         <p>Loading</p>
         :
-        <div>
-            <p>Playa Score</p>
-            <p>{playerValue}</p>
-            <button onClick={handleHit}>Hit me</button>
-            <button onClick={handleStay}>Stay</button>
+        <div style={styles.playerHand}>
+            <div> 
             {currentCards.map((card) => {
                 return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
             })}
+            </div>
+
+            <div>
+                {/* <h2>Current Hand Value:{playerValue}</h2> */}
+                <h2>Current Hand Value: {playerValue}</h2>
+            </div>
+            <div>
+                <button onClick={handleHit} className='navBtns'>Hit me</button>
+                <button onClick={handleStay} className='navBtns'>Stay</button>
+            </div>
         </div>
     )
 }

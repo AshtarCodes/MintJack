@@ -19,7 +19,7 @@ const Login = () => {
             padding: '1.777rem'
         },
         landing: {
-            backgroundColor: `rgba(242,240,231, 1)`,
+            backgroundColor: `aliceblue`,
             display: `flex`,
             flexDirection: `row`,
             flexFlow: 'row wrap',
@@ -28,7 +28,7 @@ const Login = () => {
             marginTop: '1.777rem'
         },
         form:{
-            backgroundColor: `aliceblue`,
+            backgroundColor: `rgba(3, 4, 94, 1)`,
             width: `70%`,
             padding: '4.209rem',
             borderRadius: '1rem',

@@ -196,9 +196,10 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue}) => {
         <p>Loading</p>
         :
         <div>
-            <p>Dealer Score</p>
-            <p>{dealerValue}</p>
-            <button onClick={handleHit}>Hit Dealer</button>
+            <h2>Dealer</h2> 
+            {/* <p>Dealer Score</p> */}
+            {/* <p>{dealerValue}</p> */}
+            {/* <button onClick={handleHit}>Hit Dealer</button> */}
             {currentCards.map((card) => {
                 return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
             })}
