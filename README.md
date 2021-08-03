@@ -8,10 +8,10 @@ This is our flavor of blackjack, developed for the MintBean Hackathon. Thanks fo
 
 ## Tech:
 
-**Languages:** JavaScript
-**Runtime:** Node.js 
-**Frameworks:** React.js, Express.js
-**Database:** MongoDb (with Mongoose ODM)
+- **Languages:** JavaScript
+- **Runtime:** Node.js 
+- **Frameworks:** React.js, Express.js
+- **Database:** MongoDb (with Mongoose ODM)
 
 ## Optimizations (Coming soon)
 
