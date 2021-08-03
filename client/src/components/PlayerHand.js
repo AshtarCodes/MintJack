@@ -11,7 +11,7 @@ const styles ={
     }
 }
 
-const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus}) => {
+const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus, flipped}) => {
     const [loadedCards,setLoadedCards] = useState(false)
     const [playerValue,setPlayerValue] = useState(0)
     const [currentCards,setCurrentCards] = useState([])
@@ -157,7 +157,6 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus}) => {
     },[])
 
     useEffect(() => {
-        //TODO: diable user actions on win or bust
         checkWin(playerValue)
         function checkWin (playerValue) {
             if (playerValue > 21){
@@ -166,14 +165,13 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus}) => {
                 handleStay(playerValue)
                 
             } else if (playerValue === 21) {
-                alert('21!')
+                // alert('21!')                
                 console.log('21!')
                 handleStay(playerValue)
             }
         }
         
     },[playerValue])
-
     return (
         !loadedCards ? 
         <p>Loading</p>
@@ -190,8 +188,8 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus}) => {
                 <h2>Current Hand Value: {playerValue}</h2>
             </div>
             <div>
-                <button onClick={handleHit} className='navBtns'>Hit me</button>
-                <button onClick={handleStay} className='navBtns'>Stay</button>
+                <button disabled={flipped} onClick={handleHit} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'}>Hit me</button>
+                <button disabled={flipped} onClick={handleStay} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'}>Stay</button>
             </div>
         </div>
     )

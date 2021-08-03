@@ -52,7 +52,7 @@ const BlackjackTable = () => {
       setDeckId(res.data.deck_id)
       
     },[]) 
-  
+    // TODO retrieve the user , specifically their money so they can make a phone 
     useEffect(() => {
       axios.get('http://localhost:3000/loggedInUser')
       .then(res => {

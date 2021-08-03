@@ -25,7 +25,7 @@ function Game({deckId}) {
         setFinalDealerValue(val)
     }
 
-    
+   
     const [playerState, setPlayerState] = useState([])
     const [dealerState, setDealerState] = useState([])
 
@@ -37,16 +37,27 @@ function Game({deckId}) {
         setDealerState([...initialDraw[0]])
         setIsLoadingCards(true)
     },[])
-
+ // TODO handle the case where the player is greater than the dealer value but still under 21 (add && conditional)
+    // TODO handle if a player busts and the dealer busts as well, we can count it as a draw for the player and they don't lost their bet
     useEffect(() => {
+        console.log('deck id',deckId)
         // console.log('running useeffect in the game component to eval player vs dealer')
         if(finalDealerValue && finalPlayerValue){
-            if(finalDealerValue > finalPlayerValue){
+            if(finalDealerValue > finalPlayerValue && finalDealerValue <= 21){
                 console.log('Dealer Wins')
-            }else if(finalDealerValue < finalPlayerValue){
+            }else if(finalPlayerValue > finalDealerValue && finalPlayerValue <= 21){
                 console.log('Player Wins')
-            }else{
+            }else if ((finalDealerValue === finalPlayerValue && finalPlayerValue <= 21 && finalDealerValue <= 21) || ((finalDealerValue > 21 && finalPlayerValue > 21) && (finalPlayerValue < finalDealerValue))) {
                 console.log('Tie!')
+            }else if(finalDealerValue <= 21  && finalPlayerValue > 21){
+                console.log('Dealer Wins!')
+            
+            }else if(finalDealerValue >= 21  && finalPlayerValue <= 21){
+                console.log('Player Wins!')
+            }else if(finalDealerValue > 21 && finalPlayerValue > 21 && (finalDealerValue < finalPlayerValue)){
+                console.log('Dealer')
+            } else if ((finalDealerValue === finalPlayerValue && finalPlayerValue >= 21 && finalDealerValue >= 21)){
+                console.log('Dealer Wins!')
             }
             setRoundOver(true)
         }
@@ -84,7 +95,7 @@ function Game({deckId}) {
             <p>{playerState.length}</p>
 
             {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
-            <PlayerHand setFlippedStatus = {setFlippedStatus} initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
+            <PlayerHand setFlippedStatus = {setFlippedStatus} flipped={flipped} initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
 
             
             
@@ -100,8 +111,7 @@ const styles = {
         padding: '1.777rem',
         marginTop: '4rem'
     }
-}
-
+}    
 export default Game
 
 // load a game with the

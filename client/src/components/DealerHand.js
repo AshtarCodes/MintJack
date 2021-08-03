@@ -182,18 +182,21 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped
     
     useEffect(() => {
      
-           if (finalPlayerValue && dealerValue < 17){
+           if (finalPlayerValue && dealerValue){
             checkDealer(dealerValue)
+            console.log('dealerHand: ',dealerValue)
+            if(dealerValue >= 17) {
+                setFlippedStatus(true)
+                trackDealerValue(dealerValue)
+                console.log('dealerHand >= 17')
+            }
 
             function checkDealer(dealerValue){
                 if(dealerValue && dealerValue < 17){
                 handleHit()
                 }
             }
-            } else if(dealerValue >= 17) {
-                setFlippedStatus(true)
-                trackDealerValue(dealerValue)
-            }
+            } 
         
         
     }, [dealerValue, finalPlayerValue])
