@@ -8,6 +8,14 @@ const styles ={
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+    },
+    buttonDiv:{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end'
+    },
+    marginRight:{
+        marginRight:'1.777rem'
     }
 }
 
@@ -187,8 +195,8 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus, flippe
                 {/* <h2>Current Hand Value:{playerValue}</h2> */}
                 <h2>Current Hand Value: {playerValue}</h2>
             </div>
-            <div>
-                <button disabled={flipped} onClick={handleHit} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'}>Hit me</button>
+            <div style={styles.buttonDiv}>
+                <button disabled={flipped} onClick={handleHit} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'} style={styles.marginRight}>Hit me</button>
                 <button disabled={flipped} onClick={handleStay} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'}>Stay</button>
             </div>
         </div>

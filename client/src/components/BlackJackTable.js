@@ -37,7 +37,6 @@ const styles ={
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: `aliceblue`,
   }
 }
 
@@ -71,7 +70,7 @@ const BlackjackTable = () => {
       })
     }
     
-    // if(loggedInUserContext){
+    if(loggedInUserContext){
       return (
         <div style={styles.landing}>
           <nav style={styles.nav}>
@@ -85,11 +84,11 @@ const BlackjackTable = () => {
           </div>
         </div>
       )
-    // } else{
-    //   return(
-    //     <Redirect to='/' />
-    //   )
-    // }
+    } else{
+      return(
+        <Redirect to='/' />
+      )
+    }
 
     
 }

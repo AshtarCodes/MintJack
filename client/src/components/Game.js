@@ -5,6 +5,15 @@ import DealerHand from './DealerHand'
 import {initializeCardData} from '../helpers'
 import { Redirect, Link } from 'react-router-dom'
 
+const styles = {
+    game:{
+        backgroundColor:'rgba(2, 62, 138, 1)',
+        width: '100%',
+        borderRadius: '1rem',
+        padding: '1.777rem',
+        marginTop: '4rem'
+    }
+}
 function Game({deckId}) {
     // keeping track of the player hands once they are finished with their turn 
     const [finalPlayerValue,setFinalPlayerValue] = useState(0)
@@ -63,56 +72,55 @@ function Game({deckId}) {
         }
     }, [finalDealerValue])
 
-    // console.log(dealerState)
-    return (
-        !loadingCards ? 
-        <div>
-            {/* <p>Loading</p> */}
-            <button onClick={() => handleSetup(deckId,1)} className='navBtns'>Start Game</button>
-        </div>
-    
-        
-        :
+
+    if(!loadingCards){
+        return (      
+            <div>
+                <button onClick={() => handleSetup(deckId,1)} className='navBtns'>Start Game</button>
+            </div>
+        )
+    } else if (roundOver){
+        return(
         <div style={styles.game}>
-            {/* <p>This is our Game component</p> */}
-            {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
-
-            {roundOver && 
-                <button className='navBtns' onClick={() => window.location.reload()}>Play Again</button>
-            }
-
-            <div style={{backgroundColor: 'blue'}}>
-            <h2 style={{color:'white'}}>Final Player Value</h2>
-            <p style={{fontSize:'32px'}}>{finalPlayerValue}</p>
-            </div>
-            <div style={{backgroundColor: 'red'}}>
-            <h2 style={{color:'white'}}>Final Dealer Value</h2>
-            <p style={{fontSize:'32px'}}>{finalDealerValue}</p>
-            </div>
-            
-            <DealerHand setFlippedStatus = {setFlippedStatus} initialCards={dealerState} flipped={flipped} finalPlayerValue={finalPlayerValue} trackDealerValue={trackDealerValue} deck={deckId}/>
-            {/* console.log(playerStart) */}
-            <p>{playerState.length}</p>
-
-            {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
-            <PlayerHand setFlippedStatus = {setFlippedStatus} flipped={flipped} initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
-
-            
-            
+            <DealerHand 
+                        setFlippedStatus = {setFlippedStatus} 
+                        initialCards={dealerState} 
+                        flipped={flipped} 
+                        finalPlayerValue={finalPlayerValue} 
+                        trackDealerValue={trackDealerValue} 
+                        deck={deckId}/>
+    
+            <PlayerHand 
+                    setFlippedStatus = {setFlippedStatus} 
+                    initialCards={playerState} 
+                    trackPlayerValue={trackPlayerValue} 
+                    deck={deckId}/>
+            <button className='navBtns' onClick={() => window.location.reload()}>Play Again</button>
         </div>
-    )
+        )
+    } else{
+        return (
+            <div style={styles.game}>
+                <DealerHand 
+                        setFlippedStatus = {setFlippedStatus} 
+                        initialCards={dealerState} 
+                        flipped={flipped} 
+                        finalPlayerValue={finalPlayerValue} 
+                        trackDealerValue={trackDealerValue} 
+                        deck={deckId}/>
+    
+                <PlayerHand 
+                        setFlippedStatus = {setFlippedStatus} 
+                        flipped={flipped}
+                        initialCards={playerState} 
+                        trackPlayerValue={trackPlayerValue} 
+                        deck={deckId}/>
+            </div>
+        )
+    }
+
 }
 
-const styles = {
-    game:{
-        backgroundColor:'rgba(2, 62, 138, 1)',
-        width: '100%',
-        borderRadius: '1rem',
-        padding: '1.777rem',
-        marginTop: '4rem'
-    }
-}    
-export default Game
 
 // load a game with the
 /*

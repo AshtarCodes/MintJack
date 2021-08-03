@@ -35,7 +35,7 @@ const styles = {
         // minHeight: '100vh',
     },
     hero:{
-        minHeight: '100vh',
+        minHeight: '75vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -43,21 +43,22 @@ const styles = {
         width: `100%`,
         padding: '1.777rem'
     },
-    // h1: {
-    //     color:`rgba(9, 7, 11, 1)`,
-    // },
     buttonsDiv: {
         display: 'flex',
         flexDirection: 'row'
     },
     ul: {
         display: 'flex',
-        marginTop: '1.777rem'
+        marginTop: '1.777rem',
+        justifyContent: 'center'
     },
     nav: {
-        backgroundColor: `rgba(242,240,231, 1)`,
-        padding: '1.777rem',
-        width: '100%'
+        backgroundColor: `aliceblue`,
+        width: '100%',
+        padding:'1.777rem',
+        position: 'sticky',
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     marginTop: {
         marginTop: '4rem'
@@ -72,7 +73,8 @@ const styles = {
         padding: '1.777rem'
     },
     aboutDiv: {
-        width: `70%`
+        width: `70%`,
+        textAlign: 'center'
     },
     crewCard: {
         width: `30%`,
@@ -128,12 +130,17 @@ const Landing = () => {
 
         return (
             <div style={styles.landing}>
-
+                
+                <nav style={styles.nav}>
+                    <LinkHash to='/#rules'>
+                            <button className='navBtns'>Learn the rules</button>
+                    </LinkHash>
+                </nav>
                 <div style={styles.hero}>
                     <h1 style={styles.h1}>Welcome to MintJack!</h1>
                     <div style={styles.aboutDiv}>
                         <h1>{loggedInUserContext}</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum <LinkHash to="/#rules">rules</LinkHash> </p>
+                        <p>The most refreshing blackjack game on the internet! </p>
                         
                         <ul style={styles.ul}>
                         
@@ -144,7 +151,7 @@ const Landing = () => {
                             </li>
                             <li>
                                 <Link to='/signup'>
-                                    <a href='/signup' className='navBtns'>Create Account</a>
+                                    <a href='/signup' className='navBtns' style={styles.marginRight}>Create Account</a>
                                 </Link>
                             </li>
                         </ul>
@@ -249,7 +256,7 @@ const Landing = () => {
                     </div>
                 </div>
                 <div style={styles.smallDiv}>
-                    <h3 style={styles.marginTop}>Meet the Crew</h3>
+                    <h3 style={styles.marginTop}>Meet the Crew:</h3>
                 </div>
                 <div style={styles.crewDiv}>
                     <div style={styles.crewCard}>
