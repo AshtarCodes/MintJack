@@ -36,9 +36,9 @@ const BlackjackTable = () => {
     
     if(loggedInUserContext){
       return (
-        <div style={styles.container}>
+        <div>
+          <h1>MintJack</h1>
           <button onClick={logout}>Log out</button>
-          <h1>This is our table</h1>
           <Game deckId={deckId}/>
         </div>
       )
@@ -51,10 +51,10 @@ const BlackjackTable = () => {
     
 }
 
-const styles = {
-    container:{
-        flex:1,
-        backgroundColor:'grey'
-    }
-}
+// const styles = {
+//     container:{
+//         flex:1,
+//         backgroundColor:'grey'
+//     }
+// }
 export default BlackjackTable;

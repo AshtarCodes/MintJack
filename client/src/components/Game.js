@@ -3,11 +3,13 @@ import DeckAPI from '../api'
 import PlayerHand from './PlayerHand'
 import DealerHand from './DealerHand'
 import {initializeCardData} from '../helpers'
+import { Redirect, Link } from 'react-router-dom'
 
 function Game({deckId}) {
     // keeping track of the player hands once they are finished with their turn 
     const [finalPlayerValue,setFinalPlayerValue] = useState(0)
     const [finalDealerValue,setFinalDealerValue] = useState(0)
+    const [roundOver, setRoundOver] = useState(false)
     // handle load
     const [loadingCards,setIsLoadingCards] = useState(false)
     // adds the value of they playersHand to the queue when they hit/bust/get to 21 , these values should be passed down to the dealer 
@@ -41,6 +43,7 @@ function Game({deckId}) {
             }else{
                 console.log('Tie!')
             }
+            setRoundOver(true)
         }
     }, [finalDealerValue])
 
@@ -48,14 +51,20 @@ function Game({deckId}) {
     return (
         !loadingCards ? 
         <div>
-            <p>Loading</p>
-            <button onClick={() => handleSetup(deckId,1)}>Start Game</button>
+            {/* <p>Loading</p> */}
+            <button onClick={() => handleSetup(deckId,1)} className='navBtns'>Start Game</button>
         </div>
+    
         
         :
         <div style={styles.game}>
-            <p>This is our Game component</p>
+            {/* <p>This is our Game component</p> */}
             {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
+
+            {roundOver && 
+                <a href='/table' onClick={() => handleSetup(deckId,1)} className='navBtns'>Play Again</a>
+            }
+
             <div style={{backgroundColor: 'blue'}}>
             <h2 style={{color:'white'}}>Final Player Value</h2>
             <p style={{fontSize:'32px'}}>{finalPlayerValue}</p>

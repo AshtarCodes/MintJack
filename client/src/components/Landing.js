@@ -124,27 +124,7 @@ const Landing = () => {
 
         return (
             <div style={styles.landing}>
-                {/* <nav style={styles.nav}>
-                    <ul style={styles.ul}>
-                        <li style={styles.navBtns}>               
-                            <Link to='/login'>
-                                <a href='/login'>Login</a>
-                            </Link>
-                        </li>
-                        <li style={styles.navBtns}>
-                            <Link to='/signup'>
-                                <a href='/signup'>Create Account</a>
-                            </Link>
-                        </li>
-                        <li>               
-                            
-                        <Link to='/'>
-                                <a href='/' onClick={logout}>Logout</a>
-                        </Link>         
-                            
-                        </li>
-                    </ul>
-                </nav> */}
+
                 <div style={styles.hero}>
                     <h1 style={styles.h1}>Welcome to MintJack!</h1>
                     <div style={styles.aboutDiv}>
