@@ -121,6 +121,7 @@ function Game({deckId}) {
 
 }
 
+export default Game
 
 // load a game with the
 /*
