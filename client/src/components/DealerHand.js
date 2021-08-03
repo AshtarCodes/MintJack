@@ -215,7 +215,8 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped
                 :
                 currentCards.map((card) => {
                     return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
-                })}
+                })
+             }
             
             
         </div>
