@@ -204,11 +204,12 @@ const DealerHand = ({deck,initialCards,finalPlayerValue,trackDealerValue,flipped
         <p>Loading</p>
         :
         <div>
-            <p>Dealer Score</p>
-            <p>Dealer Value : {dealerValue}</p>
-            <button onClick={handleHit}>Hit Dealer</button>
+            {/* <p>Dealer Score</p>
+            <p>Dealer Value : {dealerValue}</p> */}
+            {/* <button onClick={handleHit}>Hit Dealer</button> */}
              {(!flipped) ?
-                <div> 
+                <div>
+                    <h2>Dealer</h2> 
                     <Card key={currentCards[0].code} cardName={currentCards[0].code} cardImg={currentCards[0].image}/>
                     <Card key={currentCards[1].code} cardName={currentCards[1].code} cardImg={'https://lh3.googleusercontent.com/proxy/Y6cxlC3bBdwu5aW3lL3AymB-dEFPexx_oNuIhA1RdG53I2phL6mzHyEFxmnc1dFGvtevVYNwvi3RzRPOA3tPdWdCKazAI5Y'}/>
                 </div>

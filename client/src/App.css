@@ -74,6 +74,9 @@ p, input, textarea, h4{
   border: solid 1px rgba(0,0,0,.1);
   border-radius: 1rem;
 }
+i:hover{
+  color:rgba(0, 119, 182, 1);
+}
 input{
   width: 100%;
   padding: 1rem 0;
