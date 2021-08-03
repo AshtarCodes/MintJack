@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import BlackjackTable from './components/BlackJackTable';
 import Login from './components/Login';
 import { UserProvider } from './Context/UserContext';
+import LandingAuth from './components/LandingAuth';
 
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
 
               <Route exact path='/'>
                 <Landing />
+              </Route>
+              <Route exact path='/home'>
+                <LandingAuth />
               </Route>
 
               <Route exact path='/signup'>

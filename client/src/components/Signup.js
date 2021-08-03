@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../Context/UserContext'
 import axios from 'axios'
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 import FormField from './FormField';
 import Button from './Button';
 
@@ -16,7 +16,7 @@ const styles ={
         padding: '1.777rem'
     },
     landing: {
-        backgroundColor: `rgba(242,240,231, 1)`,
+        backgroundColor: `aliceblue`,
         display: `flex`,
         flexDirection: `row`,
         flexFlow: 'row wrap',
@@ -25,10 +25,19 @@ const styles ={
         marginTop: '1.777rem'
     },
     form:{
-        backgroundColor: `aliceblue`,
+        backgroundColor: `rgba(3, 4, 94, 1)`,
         width: `70%`,
         padding: '4.209rem',
         borderRadius: '1rem',
+        marginTop: '6rem'
+    },
+    nav:{
+        padding: '4.209rem',
+        width: '100%',
+        position: 'fixed',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }
 const Signup = () => {
@@ -88,6 +97,11 @@ const Signup = () => {
 
         return(
             <div style={styles.landing}>
+                <nav style={styles.nav}>
+                    <Link to='/'>
+                            <h1 className='headerLink'>MintJack</h1>
+                    </Link>
+                </nav>
                 <div style={styles.hero}>
                     <form   style={styles.form}
                             onSubmit={handleSubmitFile}

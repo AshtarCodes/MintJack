@@ -3,14 +3,29 @@ import DeckAPI from '../api'
 import PlayerHand from './PlayerHand'
 import DealerHand from './DealerHand'
 import {initializeCardData} from '../helpers'
+import { Redirect, Link } from 'react-router-dom'
 
+const styles = {
+    game:{
+        backgroundColor:'rgba(2, 62, 138, 1)',
+        width: '100%',
+        borderRadius: '1rem',
+        padding: '1.777rem',
+        marginTop: '4rem'
+    }
+}
 function Game({deckId}) {
     // keeping track of the player hands once they are finished with their turn 
     const [finalPlayerValue,setFinalPlayerValue] = useState(0)
     const [finalDealerValue,setFinalDealerValue] = useState(0)
+    const [roundOver, setRoundOver] = useState(false)
     // handle load
     const [loadingCards,setIsLoadingCards] = useState(false)
+    const [flipped,setFlipped] = useState(false)
     // adds the value of they playersHand to the queue when they hit/bust/get to 21 , these values should be passed down to the dealer 
+    const setFlippedStatus = (status) => {
+        setFlipped(status)
+    }
     const trackPlayerValue = (val) => {
         setFinalPlayerValue(val)
     }
@@ -18,7 +33,8 @@ function Game({deckId}) {
     const trackDealerValue = (val) => {
         setFinalDealerValue(val)
     }
-    
+
+   
     const [playerState, setPlayerState] = useState([])
     const [dealerState, setDealerState] = useState([])
 
@@ -30,59 +46,85 @@ function Game({deckId}) {
         setDealerState([...initialDraw[0]])
         setIsLoadingCards(true)
     },[])
-
+    // TODO handle the case where the player is greater than the dealer value but still under 21 (add && conditional)
+    // TODO handle if a player busts and the dealer busts as well, we can count it as a draw for the player and they don't lost their bet
     useEffect(() => {
+        console.log('deck id',deckId)
         // console.log('running useeffect in the game component to eval player vs dealer')
         if(finalDealerValue && finalPlayerValue){
-            if(finalDealerValue > finalPlayerValue){
+            if(finalDealerValue > finalPlayerValue && finalDealerValue <= 21){
                 console.log('Dealer Wins')
-            }else if(finalDealerValue < finalPlayerValue){
+            }else if(finalPlayerValue > finalDealerValue && finalPlayerValue <= 21){
                 console.log('Player Wins')
-            }else{
+            }else if ((finalDealerValue === finalPlayerValue && finalPlayerValue <= 21 && finalDealerValue <= 21) || ((finalDealerValue > 21 && finalPlayerValue > 21) && (finalPlayerValue < finalDealerValue))) {
                 console.log('Tie!')
+            }else if(finalDealerValue <= 21  && finalPlayerValue > 21){
+                console.log('Dealer Wins!')
+            
+            }else if(finalDealerValue >= 21  && finalPlayerValue <= 21){
+                console.log('Player Wins!')
+            }else if(finalDealerValue > 21 && finalPlayerValue > 21 && (finalDealerValue < finalPlayerValue)){
+                console.log('Dealer')
+            } else if ((finalDealerValue === finalPlayerValue && finalPlayerValue >= 21 && finalDealerValue >= 21)){
+                console.log('Dealer Wins!')
             }
+            setRoundOver(true)
         }
     }, [finalDealerValue])
+    
+    useEffect(() => {
+        // if can't retrieve deckId from local storage, fetches a deck, and stores id. 
+        // if deckid is empty, fetch another deck.  
+        // if retrieves deckId, draws cards
+    })
 
-    // console.log(dealerState)
-    return (
-        !loadingCards ? 
-        <div>
-            <p>Loading</p>
-            <button onClick={() => handleSetup(deckId,1)}>Start Game</button>
-        </div>
-        
-        :
+    if(!loadingCards){
+        return (      
+            <div>
+                <button onClick={() => handleSetup(deckId,1)} className='navBtns'>Start Game</button>
+            </div>
+        )
+    } else if (roundOver){
+        return(
         <div style={styles.game}>
-            <p>This is our Game component</p>
-            {/* <button onClick={() => handleSetup(deckId,1)}>Start Game</button> */}
-            <div style={{backgroundColor: 'blue'}}>
-            <h2 style={{color:'white'}}>Final Player Value</h2>
-            <p style={{fontSize:'32px'}}>{finalPlayerValue}</p>
-            </div>
-            <div style={{backgroundColor: 'red'}}>
-            <h2 style={{color:'white'}}>Final Dealer Value</h2>
-            <p style={{fontSize:'32px'}}>{finalDealerValue}</p>
-            </div>
-            
-            <DealerHand initialCards={dealerState} finalPlayerValue={finalPlayerValue} trackDealerValue={trackDealerValue} deck={deckId}/>
-            {/* console.log(playerStart) */}
-            <p>{playerState.length}</p>
-
-            {/* card objects need to be passed down, and number values handled in the reduce. This will allow robust handling of the ace.*/}
-            <PlayerHand initialCards={playerState} trackPlayerValue={trackPlayerValue} deck={deckId}/>
-
-            
-            
+            <DealerHand 
+                        setFlippedStatus = {setFlippedStatus} 
+                        initialCards={dealerState} 
+                        flipped={flipped} 
+                        finalPlayerValue={finalPlayerValue} 
+                        trackDealerValue={trackDealerValue} 
+                        deck={deckId}/>
+    
+            <PlayerHand 
+                    setFlippedStatus = {setFlippedStatus} 
+                    flipped={flipped}
+                    initialCards={playerState} 
+                    trackPlayerValue={trackPlayerValue} 
+                    deck={deckId}/>
+            <button className='navBtns' onClick={() => window.location.reload()}>Play Again</button>
         </div>
-    )
-}
-
-const styles = {
-    game:{
-        backgroundColor:'green',
-        fontSize:'36px'
+        )
+    } else{
+        return (
+            <div style={styles.game}>
+                <DealerHand 
+                        setFlippedStatus = {setFlippedStatus} 
+                        initialCards={dealerState} 
+                        flipped={flipped} 
+                        finalPlayerValue={finalPlayerValue} 
+                        trackDealerValue={trackDealerValue} 
+                        deck={deckId}/>
+    
+                <PlayerHand 
+                        setFlippedStatus = {setFlippedStatus} 
+                        flipped={flipped}
+                        initialCards={playerState} 
+                        trackPlayerValue={trackPlayerValue} 
+                        deck={deckId}/>
+            </div>
+        )
     }
+
 }
 
 export default Game
