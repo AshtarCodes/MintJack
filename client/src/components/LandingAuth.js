@@ -43,6 +43,9 @@ const styles = {
         width: `100%`,
         padding: '1.777rem'
     },
+    // h1: {
+    //     color:`rgba(9, 7, 11, 1)`,
+    // },
     buttonsDiv: {
         display: 'flex',
         flexDirection: 'row'
@@ -101,7 +104,7 @@ const styles = {
     }
 }
 
-const Landing = () => {
+const LandingAuth = () => {
 
     const {loggedInUserContext, setLoggedInUserContext} = useContext(UserContext)
 
@@ -124,17 +127,13 @@ const Landing = () => {
     }
     if(loggedInUserContext){
        return(
-            <Redirect to='/table' />   
-        )
-    } else {
+            // <Redirect to='/table' />
 
-        return (
             <div style={styles.landing}>
-                
                 <nav style={styles.nav}>
-                    <LinkHash to='/#rules'>
-                            <button className='navBtns'>Learn the rules</button>
-                    </LinkHash>
+                    <Link to='/'>
+                            <button className='navBtns' onClick={logout}>Log out</button>
+                    </Link>
                 </nav>
                 <div style={styles.hero}>
                     <h1 style={styles.h1}>Welcome to MintJack!</h1>
@@ -145,13 +144,13 @@ const Landing = () => {
                         <ul style={styles.ul}>
                         
                             <li>               
-                                <Link to='/login'>
-                                    <a href='/login' className='navBtns' style={styles.marginRight}>Login</a>
-                                </Link>
+                                <LinkHash to='/home/#rules'>
+                                    <button className='navBtns' style={styles.marginRight}>Learn the rules</button>
+                                </LinkHash>
                             </li>
-                            <li>
-                                <Link to='/signup'>
-                                    <a href='/signup' className='navBtns' style={styles.marginRight}>Create Account</a>
+                            <li>               
+                                <Link to='/table'>
+                                    <a href='/table' className='navBtns' style={styles.marginRight}>Play a game!</a>
                                 </Link>
                             </li>
                         </ul>
@@ -322,10 +321,14 @@ const Landing = () => {
                 </div>
 
             </div>
+            
         )
+    } else {
+
+        <Redirect to='/' />
     }
 }
 
 
 
-export default Landing
+export default LandingAuth

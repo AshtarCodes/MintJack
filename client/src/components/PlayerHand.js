@@ -3,8 +3,23 @@ import {parseCardValue} from '../helpers'
 import DeckAPI from '../api'
 import Card from './Card'
 
+const styles ={
+    playerHand: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    buttonDiv:{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end'
+    },
+    marginRight:{
+        marginRight:'1.777rem'
+    }
+}
 
-const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
+const PlayerHand = ({deck,trackPlayerValue,initialCards,setFlippedStatus, flipped}) => {
     const [loadedCards,setLoadedCards] = useState(false)
     const [playerValue,setPlayerValue] = useState(0)
     const [currentCards,setCurrentCards] = useState([])
@@ -56,6 +71,8 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
                 } else if (hasInitialAce() && nextCard.value !== 'ACE'){
                     current = prev + nextCardValue - (10 * numOfUntaggedAces()) // make an initial ace value of one
                     tagAnAce()
+                } else {
+                    current = prev + nextCardValue;
                 }
             } else {
                 current = prev + nextCardValue
@@ -135,6 +152,10 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     const handleStay = () => {
         console.log('Stay! Dealer\'s turn now')
         trackPlayerValue(playerValue)
+        console.log(' before flipped on stay',flipped)
+        setFlippedStatus((prev) => true)
+        console.log('flipped after stay',flipped)
+
     }
 
     const loadCards = useCallback(() => {
@@ -149,7 +170,6 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
     },[])
 
     useEffect(() => {
-        //TODO: diable user actions on win or bust
         checkWin(playerValue)
         function checkWin (playerValue) {
             if (playerValue > 21){
@@ -158,26 +178,32 @@ const PlayerHand = ({deck,trackPlayerValue,initialCards}) => {
                 handleStay(playerValue)
                 
             } else if (playerValue === 21) {
-                alert('21!')
+                // alert('21!')                
                 console.log('21!')
                 handleStay(playerValue)
             }
         }
         
     },[playerValue])
-
     return (
         !loadedCards ? 
         <p>Loading</p>
         :
-        <div>
-            <p>Playa Score</p>
-            <p>{playerValue}</p>
-            <button onClick={handleHit}>Hit me</button>
-            <button onClick={handleStay}>Stay</button>
+        <div style={styles.playerHand}>
+            <div> 
             {currentCards.map((card) => {
                 return <Card key={card.code} cardName={card.code} cardImg={card.image}/>
             })}
+            </div>
+
+            <div>
+                {/* <h2>Current Hand Value:{playerValue}</h2> */}
+                <h2>Current Hand Value: {playerValue}</h2>
+            </div>
+            <div style={styles.buttonDiv}>
+                <button disabled={flipped} onClick={handleHit} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'} style={styles.marginRight}>Hit me</button>
+                <button disabled={flipped} onClick={handleStay} className={!flipped ? 'navBtns' : 'navBtns disabledBtn'}>Stay</button>
+            </div>
         </div>
     )
 }
